@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="description" content="Machining parameter recommendations from a Gaussian Process Regression model.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>Machining Optimizer</title>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-icon" aria-hidden="true">⚙</div>
+    <div><div class="eyebrow">MACHINING TOOLS</div><div class="brand-name">Machining Optimizer</div></div>
+    <span id="connectionStatus" class="status">Loading model…</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="eyebrow">GPR-BASED RECOMMENDATIONS</p>
+      <h1>Find a better<br><span>cutting strategy.</span></h1>
+      <p class="subhead">Compare depth-of-cut options and machining settings for your target total depth.</p>
+    </section>
+
+    <section class="panel" aria-labelledby="inputHeading">
+      <div class="panel-heading"><div><p class="eyebrow">01 / INPUTS</p><h2 id="inputHeading">Machining setup</h2></div><span class="material-chip">Fixed material</span></div>
+      <form id="optimizerForm">
+        <label for="totalDepth">Target total machining depth <span>(mm)</span></label>
+        <input id="totalDepth" name="totalDepth" type="number" min="0.01" step="any" value="3" required>
+        <label for="toolDiameter">Tool diameter <span>(mm)</span></label>
+        <input id="toolDiameter" name="toolDiameter" type="number" min="0.01" step="any" value="10" required>
+        <div class="optional-head"><label for="cutLength">Cutting path length per pass <span>(mm)</span></label><span>Optional</span></div>
+        <input id="cutLength" name="cutLength" type="number" min="0.01" step="any" placeholder="Leave blank to skip energy estimate">
+        <p class="hint">Enter the cutting distance for one pass. The same distance is assumed for every pass.</p>
+        <button id="optimizeButton" type="submit" disabled><span>Calculate recommendations</span><span aria-hidden="true">↗</span></button>
+        <p id="errorMessage" class="error" role="alert" hidden></p>
+      </form>
+    </section>
+
+    <section id="resultsSection" hidden aria-live="polite">
+      <div class="results-title"><div><p class="eyebrow">02 / RESULTS</p><h2>Recommended settings</h2></div><span id="resultCount" class="result-count"></span></div>
+      <p id="rankingNote" class="ranking-note"></p>
+      <div id="resultsList" class="results-list"></div>
+      <p class="disclaimer">Model estimates are not machine guarantees. Confirm tool, spindle, feed, depth-of-cut and workholding limits before machining. Predictions outside the training data range may be unreliable.</p>
+    </section>
+
+    <section class="install-panel" id="installPanel" hidden>
+      <div class="install-symbol">＋</div><div class="install-copy"><h3>Keep it on your home screen</h3><p>Install Machining Optimizer for an app-like experience. After the first successful load, the core calculator can work offline.</p></div><button id="installButton" class="secondary-button" hidden>Install</button>
+    </section>
+    <p id="installHelp" class="install-help" hidden>On Android Chrome, open the browser menu (⋮) and choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.</p>
+  </main>
+  <footer><span>Machining Optimizer</span><span>Offline-ready PWA · Model v1</span></footer>
+  <script src="app.js" defer></script>
+</body>
+</html>
